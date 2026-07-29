@@ -7,8 +7,13 @@ interface GridItem {
   description: string;
   to: string;
   icon: React.ReactElement;
-  bgColor: string;
+  bgColor?: string;
   iconColor?: string;
+  badge?: string;
+  badgeBg?: string;
+  badgeColor?: string;
+  ctaLabel?: string;
+  ctaColor?: string;
 }
 
 interface HomeButtonGridProps {
@@ -17,26 +22,31 @@ interface HomeButtonGridProps {
 
 const HomeButtonGrid = ({ items }: HomeButtonGridProps) => {
   return (
-    <Grid 
-      container 
-      spacing={2} 
-      justifyContent="center" 
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
       sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' } }}
     >
       {items.map((item) => (
-        <Grid 
+        <Grid
           key={item.to}
-          size={{ xs: 12, md: 4 }} 
-          display="flex" 
+          size={{ xs: 12, md: 4 }}
+          display="flex"
           justifyContent="center"
         >
-          <HomeButtonCard 
+          <HomeButtonCard
             title={item.title}
             description={item.description}
             to={item.to}
             icon={item.icon}
             bgColor={item.bgColor}
             iconColor={item.iconColor}
+            badge={item.badge}
+            badgeBg={item.badgeBg}
+            badgeColor={item.badgeColor}
+            ctaLabel={item.ctaLabel}
+            ctaColor={item.ctaColor}
           />
         </Grid>
       ))}

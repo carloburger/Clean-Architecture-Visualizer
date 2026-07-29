@@ -7,6 +7,12 @@ dist/
 *.tsbuildinfo
 clean-architecture-visualizer/frontend/public/
 
+# IDE
+.idea/
+
 # Secrets
 .DS_Store
 .env
+
+# Local task tracking
+tasks/

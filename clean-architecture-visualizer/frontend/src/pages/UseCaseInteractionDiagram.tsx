@@ -1,58 +1,36 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import '../i18n/config';
 import Header from '../components/common/Header';
-import { CADiagram, Legend, SideBar, type NodeClickInfo } from '../components/diagram';
-import { MainViewContainer, PageContainer, Workspace } from '../components/diagram/CADiagramPageLayout';
+import { CADiagram, Legend, SideBar } from '../components/diagram';
+import {
+  MainViewContainer,
+  PageContainer,
+  Workspace,
+} from '../components/diagram/CADiagramPageLayout';
 import ViolationsSideBarContent from '../components/diagram/ViolationsSideBarContent';
-import { CtaButton } from '../components/common/Button';
 import { usePersistentBoolean } from '../hooks/usePersistentBoolean';
 import { USE_CASE_SIDEBAR_OPEN_STORAGE_KEY } from '../lib/storageKeys';
 
 export default function UseCaseInteractionDiagram() {
-    const { useCaseId, interactionId } = useParams();
-    const navigate = useNavigate();
-    const [isOpen, setIsOpen] = usePersistentBoolean(USE_CASE_SIDEBAR_OPEN_STORAGE_KEY, true);
-    const { t } = useTranslation('useCaseInteractionDiagram');
+  const { interactionId } = useParams();
+  const [isOpen, setIsOpen] = usePersistentBoolean(
+    USE_CASE_SIDEBAR_OPEN_STORAGE_KEY,
+    true
+  );
 
-    const codeRoute = useCaseId && interactionId
-        ? `/use-case/${useCaseId}/interaction/${interactionId}/code`
-        : '/use-case-interaction-code';
+  return (
+    <PageContainer>
+      <Header />
+      <Workspace>
+        <MainViewContainer>
+          <CADiagram />
+          <Legend />
+        </MainViewContainer>
 
-    const handleNodeClick = (info: NodeClickInfo) => {
-        if (!useCaseId || !interactionId || !info.filePath) {
-            return;
-        }
-
-        navigate(
-            `/use-case/${useCaseId}/interaction/${interactionId}/code?file=${encodeURIComponent(info.filePath)}`,
-        );
-    };
-    
-    return (
-        <PageContainer>
-            <Header
-                actions={
-                    <CtaButton
-                        variant="outlined"
-                        onClick={() => navigate(codeRoute)}
-                        startIcon={<span>{'</>'}</span>}
-                    >
-                        {t('actions.viewUseCaseInteractionCode')}
-                    </CtaButton>
-                }
-            />
-            <Workspace>
-                <MainViewContainer>
-                    <CADiagram onNodeClick={handleNodeClick} />
-                    <Legend />
-                </MainViewContainer>
-
-                <SideBar isOpen={isOpen} onOpenChange={setIsOpen}>
-                    <ViolationsSideBarContent interactionId={interactionId} />
-                </SideBar>
-            </Workspace>
-        </PageContainer>
-    );
+        <SideBar isOpen={isOpen} onOpenChange={setIsOpen}>
+          <ViolationsSideBarContent interactionId={interactionId} />
+        </SideBar>
+      </Workspace>
+    </PageContainer>
+  );
 }
-
