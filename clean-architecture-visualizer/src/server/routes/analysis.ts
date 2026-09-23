@@ -1,29 +1,24 @@
 import { Router } from 'express';
+import { FileAccess } from '../../data_access/fileAccess.js';
 import { SessionDBAccess } from '../../data_access/sessionDBAccess.js';
-import { GetProjectSummaryOutputData } from '../../use_case/getProjectSummary/getProjectSummaryOutputData.js';
-import { GetProjectSummaryInteractor } from '../../use_case/getProjectSummary/getProjectSummaryInteractor.js';
+import { GetFilesWithViolationsController } from '../../interface_adapter/getFilesWithViolations/getFilesWithViolationsController.js';
+import { GetFilesWithViolationsPresenter } from '../../interface_adapter/getFilesWithViolations/getFilesWithViolationsPresenter.js';
 import { GetProjectSummaryController } from '../../interface_adapter/getProjectSummary/getProjectSummaryController.js';
 import { GetProjectSummaryPresenter } from '../../interface_adapter/getProjectSummary/getProjectSummaryPresenter.js';
+import { GetUseCaseInfoController } from '../../interface_adapter/getUseCaseInfo/getUseCaseInfoController.js';
+import { GetUseCaseInfoPresenter } from '../../interface_adapter/getUseCaseInfo/getUseCaseInfoPresenter.js';
+import { GetViolationsController } from '../../interface_adapter/getViolations/getViolationsController.js';
+import { GetViolationsPresenter } from '../../interface_adapter/getViolations/getViolationsPresenter.js';
+import { GetFilesWithViolationsInteractor } from '../../use_case/getFilesWithViolations/getFilesWithViolationsInteractor.js';
+import { GetFilesWithViolationsOutputData } from '../../use_case/getFilesWithViolations/getFilesWithViolationsOutputData.js';
+import { GetProjectSummaryInteractor } from '../../use_case/getProjectSummary/getProjectSummaryInteractor.js';
+import { GetProjectSummaryOutputData } from '../../use_case/getProjectSummary/getProjectSummaryOutputData.js';
 import { GetUseCaseInfoInputData } from '../../use_case/getUseCaseInfo/getUseCaseInfoInputData.js';
 import { GetUseCaseInfoInteractor } from '../../use_case/getUseCaseInfo/getUseCaseInfoInteractor.js';
 import { GetUseCaseInfoOutputData } from '../../use_case/getUseCaseInfo/getUseCaseInfoOutputData.js';
-import { GetUseCaseInfoPresenter } from '../../interface_adapter/getUseCaseInfo/getUseCaseInfoPresenter.js';
-import { GetUseCaseInfoController } from '../../interface_adapter/getUseCaseInfo/getUseCaseInfoController.js';
 import { GetViolationsInputData } from '../../use_case/getViolations/GetViolationsInputData.js';
-import { GetViolationsOutputData } from '../../use_case/getViolations/GetViolationsOutputData.js';
 import { GetViolationsInteractor } from '../../use_case/getViolations/GetViolationsInteractor.js';
-import { FileAccess } from '../../data_access/fileAccess.js';
-import { GetViolationsController } from '../../interface_adapter/getViolations/getViolationsController.js';
-import { GetViolationsPresenter } from '../../interface_adapter/getViolations/getViolationsPresenter.js';
-import { GetFilesWithViolationsOutputData } from '../../use_case/getFilesWithViolations/getFilesWithViolationsOutputData.js';
-import { GetFilesWithViolationsInteractor } from '../../use_case/getFilesWithViolations/getFilesWithViolationsInteractor.js';
-import { GetFilesWithViolationsController } from '../../interface_adapter/getFilesWithViolations/getFilesWithViolationsController.js';
-import { GetFilesWithViolationsPresenter } from '../../interface_adapter/getFilesWithViolations/getFilesWithViolationsPresenter.js';
-import { GetNodeItemsInteractor } from "../../use_case/getNodeItems/getNodeItemsInteractor.js";
-import { GetNodeItemsInputData } from "../../use_case/getNodeItems/getNodeItemsInputData.js";
-import { GetNodeItemsOutputData } from "../../use_case/getNodeItems/getNodeItemsOutputData.js";
-import { GetNodeItemsController } from "../../interface_adapter/getNodeItems/getNodeItemsController.js";
-import { GetNodeItemsPresenter } from "../../interface_adapter/getNodeItems/getNodeItemsPresenter.js";
+import { GetViolationsOutputData } from '../../use_case/getViolations/GetViolationsOutputData.js';
 
 const router = Router();
 
@@ -107,22 +102,6 @@ router.get('/analysis/files-with-violations', (_req, res) => {
   const result = presenter.getOutputData();
 
   res.json(result);
-});
-
-router.get("/analysis/node-items/:useCaseId", (req, res) => {
-    const inputData = new GetNodeItemsInputData(req.params.useCaseId)
-    const outputData = new GetNodeItemsOutputData();
-    const interactor = new GetNodeItemsInteractor(dbAccess, inputData, outputData);
-    const controller = new GetNodeItemsController(interactor);
-    const presenter = new GetNodeItemsPresenter(outputData);
-
-    controller.execute();
-    const result = presenter.getOutputData();
-    if (!result) {
-        res.status(404).json({ error: `Node '${req.params.useCaseId}' not found.` });
-        return;
-    }
-    res.json(result);
 });
 
 export default router;
