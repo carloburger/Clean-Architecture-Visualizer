@@ -52,6 +52,7 @@ for (const testcase of testcases) {
   const { problems, output } = verify(testcase);
   if (problems.length === 0) {
     console.log(`PASS: ${testcase.name}`);
+    console.log(testcase.success);
   }
   else {
     console.log(`FAIL: ${testcase.name}`);
