@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f15e0f9-0d05-40f7-b4a4-a07b2c0d975a" name="Changes" comment="Fixed File name Typo">
-      <change afterPath="$PROJECT_DIR$/clean-architecture-visualizer/scripts/release-gate/run.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clean-architecture-visualizer/scripts/release-gate/testcases/violation-bad-import.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clean-architecture-visualizer/scripts/release-gate/testcases/clean-standard.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clean-architecture-visualizer/scripts/release-gate/testcases/violation-bad-import.json" beforeDir="false" afterPath="$PROJECT_DIR$/clean-architecture-visualizer/scripts/release-gate/testcases/violation-bad-import.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
