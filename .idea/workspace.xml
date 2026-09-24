@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f15e0f9-0d05-40f7-b4a4-a07b2c0d975a" name="Changes" comment="Fixed File name Typo">
-      <change afterPath="$PROJECT_DIR$/clean-architecture-visualizer/src/use_case/getNodeItems/getNodeItemsInputData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clean-architecture-visualizer/src/interface_adapter/getNodeItems/getNodeItemsPresenter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/clean-architecture-visualizer/src/interface_adapter/getNodeItems/getNodeItemsPresenter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clean-architecture-visualizer/src/server/routes/analysis.ts" beforeDir="false" afterPath="$PROJECT_DIR$/clean-architecture-visualizer/src/server/routes/analysis.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clean-architecture-visualizer/src/use_case/getNodeItems/getNodeItemsInteractor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/clean-architecture-visualizer/src/use_case/getNodeItems/getNodeItemsInteractor.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clean-architecture-visualizer/scripts/release-gate/run.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clean-architecture-visualizer/scripts/release-gate/testcases/violation-bad-import.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +58,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "scriptsdirectory",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

@@ -1,0 +1,6 @@
+{
+  "name": 'violation-bad-import',
+  "root": 'violation-bad-import',
+  "args":  ['verify']
+
+}
