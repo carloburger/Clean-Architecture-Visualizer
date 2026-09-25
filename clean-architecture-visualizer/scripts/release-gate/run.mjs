@@ -1,9 +1,8 @@
-import { spawnSync } from 'node:child_processes';
+import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { readdirSync, readFileSync} from 'node:fs';
-
 
 const { values } = parseArgs({
   options: {
@@ -58,7 +57,7 @@ for (const testcase of testcases) {
     console.log(`FAIL: ${testcase.name}`);
     failCount++;
     for (const problem of problems) console.log(` - ${problem}`);
-    console.log(`cave ouput: ${output}`);
+    console.log(`cave output: ${output}`);
   }
 }
 

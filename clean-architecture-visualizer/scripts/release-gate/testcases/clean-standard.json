@@ -1,7 +1,7 @@
 {
-  "name": 'clean-standard',
-  "root": 'clean-standard',
-  "args":  ['verify'],
+  "name": "clean-standard",
+  "root": "clean-standard",
+  "args":  ["verify"],
   "mustMatch": [
     {
       "pattern": "EnrollStudent",
@@ -10,7 +10,7 @@
   ],
   "notMatch": [
     {
-      "pattern": '[[:space:]]+entities.*controller',
+      "pattern": "\\s+entities.*controller",
       "message": "did not expect a violation line with entities -> controller. clean-standard has no entity depending on a controller, so cave has reported a false positive in dependency detection."
     }
   ],
