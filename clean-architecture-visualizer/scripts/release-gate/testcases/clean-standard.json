@@ -1,7 +1,7 @@
 {
   "name": "clean-standard",
   "root": "clean-standard",
-  "args":  ["verify"],
+  "args": ["verify"],
   "mustMatch": [
     {
       "pattern": "EnrollStudent",

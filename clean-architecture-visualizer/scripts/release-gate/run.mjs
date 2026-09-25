@@ -1,8 +1,8 @@
 import { spawnSync } from 'node:child_process';
-import { parseArgs } from 'node:util';
-import { fileURLToPath } from 'node:url';
+import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { readdirSync, readFileSync} from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
 
 const { values } = parseArgs({
   options: {
@@ -10,7 +10,10 @@ const { values } = parseArgs({
   },
 });
 const samplesDirectory = values.samples;
-const testcasesDirectory = path.join(path.dirname(fileURLToPath(import.meta.url)), 'testcases');
+const testcasesDirectory = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  'testcases'
+);
 const testcases = readdirSync(testcasesDirectory)
   .filter((file) => file.endsWith('.json'))
   .map((file) => ({
@@ -28,21 +31,21 @@ function verify(testcase) {
 
   if (result.error) {
     problems.push(`cave run error: ${result.error.message}`);
-    return { problems, output:''}
+    return { problems, output: '' };
   }
 
-  for(const match of testcase.mustMatch ?? []) {
+  for (const match of testcase.mustMatch ?? []) {
     if (!new RegExp(match.pattern, 'm').test(result.stdout)) {
       problems.push(match.message);
     }
   }
-  for(const match of testcase.notMatch ?? []) {
+  for (const match of testcase.notMatch ?? []) {
     if (new RegExp(match.pattern, 'm').test(result.stdout)) {
       problems.push(match.message);
     }
   }
 
-  return { problems, output: result.stdout}
+  return { problems, output: result.stdout };
 }
 
 let failCount = 0;
@@ -52,8 +55,7 @@ for (const testcase of testcases) {
   if (problems.length === 0) {
     console.log(`PASS: ${testcase.name}`);
     console.log(testcase.success);
-  }
-  else {
+  } else {
     console.log(`FAIL: ${testcase.name}`);
     failCount++;
     for (const problem of problems) console.log(` - ${problem}`);
@@ -62,7 +64,3 @@ for (const testcase of testcases) {
 }
 
 process.exit(failCount > 0 ? 1 : 0);
-
-
-
-

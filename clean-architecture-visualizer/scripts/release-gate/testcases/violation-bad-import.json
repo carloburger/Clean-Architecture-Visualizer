@@ -1,7 +1,7 @@
 {
   "name": "violation-bad-import",
   "root": "violation-bad-import",
-  "args":  ["verify"],
+  "args": ["verify"],
   "mustMatch": [
     {
       "pattern": "EnrollStudent",
@@ -10,7 +10,6 @@
     {
       "pattern": "\\s+entities.*controller",
       "message": "expect a violation line with entities -> controller. entity/Student.java imports and calls EnrollStudentController, so cave must flag it, but did not"
-
     }
   ],
   "success": "contract holds: cave detected the illegal entities -> controller dependency"
