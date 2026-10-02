@@ -200,6 +200,9 @@ export class FileAccess implements FileAccessInterface {
         }
         break;
       }
+      //array of packagesets
+      const wildcardSets: Set<string>[] = [];
+
       for (const line of fileLines) {
         if (
           line.startsWith('import ') ||
@@ -207,6 +210,21 @@ export class FileAccess implements FileAccessInterface {
           line.startsWith('import{')
         ) {
           const trimmed_line = line.trim();
+
+
+          const wildcardMatch = trimmed_line.match(/^import\s+([\w.]+)\.\*;$/);
+          if (wildcardMatch) {
+            const packagePath = wildcardMatch[1];
+
+            const dir = await this.getPackageDirectory(packagePath);
+
+            if (dir) {
+              const files = await fs.readdir(dir);
+              const packageNames = new Set(files.map((f) => f.replace(/\.[^.]+$/, '')));
+              wildcardSets.push(packageNames);
+            }
+            continue;
+          }
           const lastSpace = trimmed_line.lastIndexOf(' ');
           result.push(trimmed_line.substring(lastSpace + 1));
         }
@@ -216,6 +234,12 @@ export class FileAccess implements FileAccessInterface {
         const packageImports = this.getPackageImports(fileLines, packageSet);
         result.push(...packageImports); // pushed depenedency files are stripped of extra details, pushes LoginInputData not '"LoginInputData";'
       }
+      // loop through all packages that used wildcard imports
+      for (const wildcardSet of wildcardSets) {
+        const wildcardImports = this.getPackageImports(fileLines, wildcardSet);
+        result.push(...wildcardImports);
+      }
+
     } catch {
       console.log(`The file: ${filePath} could not be found`);
       return [];
@@ -252,6 +276,28 @@ export class FileAccess implements FileAccessInterface {
     }
     return [...found];
   }
+
+  /**
+   *Finds and returns the filepath of the directory of the provided package using bfsFindDir()
+   * @param packagePath the filepath of the directory given in dot format (student.example.entities)
+   * @returns the path of the directory that matches the path of the given package
+   */
+  private async getPackageDirectory(packagePath:string): Promise<string | null> {
+    const currPath = process.cwd();
+    const srcPath = await this.bfsFindDir(currPath, 'src');
+    if (!srcPath) return null;
+    const pathSegments = packagePath.split(".");
+    let currDir = srcPath;
+
+    for (const seg of pathSegments) {
+      let found = await this.bfsFindDir(currDir, seg);
+      if (!found) return null;
+      currDir = found;
+    }
+
+    return currDir;
+
+}
 
   /**
    * Get the project name, this is either the directory BEFORE "src", or if the
