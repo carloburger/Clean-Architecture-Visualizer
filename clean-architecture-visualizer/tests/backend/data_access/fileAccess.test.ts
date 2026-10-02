@@ -157,6 +157,49 @@ describe('getFileImports functionality', () => {
     expect(result).toEqual(['entity.User;', 'LoginInputBoundary']);
   });
 
+  it('returns both wildcard package imports and normal imports', async () => {
+  jest
+    .spyOn(fileAccess as any, 'getPackageDirectory')
+    .mockResolvedValueOnce('/project/src/entity');
+
+  mockReaddir.mockResolvedValueOnce([
+    'Student.java',
+    'Course.java',
+  ] as any);
+
+  mockReadFile.mockResolvedValueOnce(
+    'import entity.*;\nimport entity.User;\npublic class LoginInteractor implements Student{}'
+  );
+
+  const result = await fileAccess.getFileImports(
+    '/project/LoginInteractor.java'
+  );
+
+  expect(result).toEqual(['entity.User;', 'Student']);
+});
+
+  it('returns no wildcard imports if imported but not used in the file', async () => {
+  jest
+    .spyOn(fileAccess as any, 'getPackageDirectory')
+    .mockResolvedValueOnce('/project/src/entity');
+
+  mockReaddir.mockResolvedValueOnce([
+    'Student.java',
+    'Course.java',
+  ] as any);
+
+  mockReadFile.mockResolvedValueOnce(
+    'import entity.*;\npublic class LoginInteractor {}'
+  );
+
+  const result = await fileAccess.getFileImports(
+    '/project/LoginInteractor.java'
+  );
+    expect(result).toEqual([]);
+
+
+});
+
   it('returns an empty array and logs when the file is not found', async () => {
     mockReadFile.mockRejectedValueOnce(new Error('File not found') as any);
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
